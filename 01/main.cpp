@@ -1,67 +1,88 @@
 #include <cassert>
 #include "Allocator.hpp"
-#include <ctime>
 
-int main() {
+void test_zero_pointer() {
   Allocator allocator;
-  char* test;
+  char *test;
   allocator.makeAllocator(0);
-
-  /*** test_1 Zero pointer ***/
   test = allocator.alloc(1);
   assert(test == nullptr);
   allocator.reset();
+}
 
-  /*** test_2 alloc out-of-bounds ***/
+void alloc_without_make() {
+  Allocator allocator3;
+  char *test;
+  test = allocator3.alloc(5);
+  assert(test == nullptr);
+}
+
+void test_wrong_alloc() {
+  Allocator allocator;
+  char *test;
+
+  /*** alloc out-of-bounds ***/
   allocator.makeAllocator(5);
   test = allocator.alloc(6);
   assert(test == nullptr);
 
-  /*** test_3 alloc(0) ***/
+  /*** alloc(0) ***/
   test = allocator.alloc(0);
   assert(test == nullptr);
+}
 
-  /*** test_4 alloc ***/
+void test_alloc() {
+  Allocator allocator;
+  char *test;
+  allocator.makeAllocator(5);
+  /*** alloc ***/
   test = allocator.alloc(4);
   assert(test != nullptr);
 
-  /*** test_5 out-of-bounds ***/
+  /*** out-of-bounds: size > allocator size ***/
   test = allocator.alloc(5);
   assert(test == nullptr);
+}
 
-  /*** test_6 new allocator ***/
-  Allocator allocator2;
+void test_realloc() {
+  char *test;
+  Allocator allocator;
   size_t MaxSize = 150;
-  allocator2.makeAllocator(MaxSize);
-  test = allocator2.alloc(10);
-  for (size_t i = 0; i < MaxSize-10; i += 10) {
-    assert(test == allocator2.get_ptr(i));
-    test = allocator2.alloc(10);
-  }
+  allocator.makeAllocator(MaxSize);
+  test = allocator.alloc(10);
 
-  /*** test_7 re-allocation size_new < size_old ***/
-  allocator2.makeAllocator(70);
-  test = allocator2.alloc(15);
+  for(size_t i = 0; i < MaxSize - 10; i += 10) {
+    assert(test == allocator.get_ptr(i));
+    test = allocator.alloc(10);
+  }
+  /*** re-allocation size_new < size_old ***/
+  allocator.makeAllocator(70);
+  test = allocator.alloc(15);
   assert(test != nullptr);
 
-  /*** test_8 re-allocation size_new > size_old ***/
-  allocator2.makeAllocator(200);
-  test = allocator2.alloc(50);
+  /*** re-allocation size_new > size_old ***/
+  allocator.makeAllocator(200);
+  test = allocator.alloc(50);
   assert(test != nullptr);
+}
 
-/*** time test ***/
-/*
-  Allocator allocator3;
-  allocator3.makeAllocator(100000000);
-  clock_t start = clock();
-  for (size_t i = 0; i < 100000000; i++)
-  {
-    test = allocator3.alloc(i);
-  }
-  clock_t end = clock();
-  double seconds = (double)(end - start) / CLOCKS_PER_SEC;
-  std::cout << "The time of allocation of 100000000 elements is " << seconds << " seconds";
-*/
+void test_reset() {
+  char *test;
+  Allocator allocator;
+  allocator.makeAllocator(10);
+  allocator.alloc(10);
+  allocator.reset();
+  test = allocator.alloc(10);
+  assert(test != nullptr);
+}
 
+int main() {
+  test_zero_pointer();
+  alloc_without_make();
+  test_wrong_alloc();
+  test_alloc();
+  test_realloc();
+  test_reset();
+  std::cout << "All tests passed successfully!" << std::endl;
   return 0;
 }

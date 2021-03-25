@@ -2,18 +2,23 @@ CC=g++ --std=c++17
 
 WARNINGS= -mfpmath=sse -fstack-protector-all -g -W -Wall -Wextra -Wcast-align -Werror -pedantic -pedantic-errors -Wfloat-equal -Wpointer-arith -Wformat-security -Wmissing-format-attribute -Wformat=1 -Wwrite-strings -Wcast-align -Wno-long-long -Woverloaded-virtual -Wnon-virtual-dtor -Wcast-qual -Wno-suggest-attribute=format
 
-FLAGS= -O3 -ffast-math -g -fsanitize=address
+FLAGS= -fsanitize=address
 
-all: test clear run
+test: prog clean run
 
-test: main.o
-	$(CC) $(FLAGS) $(WARNINGS) -o test main.o -lm
+prog: main.o Allocator.o
+	$(CC) $(FLAGS) $(WARNINGS) -o prog main.o Allocator.o -lm
 
 main.o:
 	$(CC) $(FLAGS) $(WARNINGS) -c main.cpp
 
-run: test
-	./test
+Allocator.o: Allocator.cpp
+	$(CC) $(FLAGS) $(WARNINGS) -c Allocator.cpp
 
-clear:
+.PHONY: clean
+
+clean:
 	rm -rf *.o
+
+run:
+	./prog
