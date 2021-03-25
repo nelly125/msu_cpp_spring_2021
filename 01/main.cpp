@@ -35,6 +35,7 @@ void test_alloc() {
   Allocator allocator;
   char *test;
   allocator.makeAllocator(5);
+  
   /*** alloc ***/
   test = allocator.alloc(4);
   assert(test != nullptr);
@@ -50,11 +51,11 @@ void test_realloc() {
   size_t MaxSize = 150;
   allocator.makeAllocator(MaxSize);
   test = allocator.alloc(10);
-
   for(size_t i = 0; i < MaxSize - 10; i += 10) {
     assert(test == allocator.get_ptr(i));
     test = allocator.alloc(10);
   }
+
   /*** re-allocation size_new < size_old ***/
   allocator.makeAllocator(70);
   test = allocator.alloc(15);
