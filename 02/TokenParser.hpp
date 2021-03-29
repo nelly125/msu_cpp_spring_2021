@@ -7,6 +7,13 @@
 #include <functional>
 #include <string>
 
+
+using StartParse  = std::function<void ()>;
+using EndParse    = std::function<void ()>;
+using StringToken = std::function<void (const std::string& str)>;
+using DigitToken  = std::function<void (const uint64_t number)>;
+
+
 class TokenParser
 {
  public:
@@ -19,12 +26,12 @@ class TokenParser
   void SetEndCallback(const std::function<void()> &);
 
   // Устанавливаем callback-функцию для обработки чисел.
-  void SetDigitTokenCallback(const std::function<void(int64_t)> &);
+  void SetDigitTokenCallback(const std::function<void(const uint64_t)> &);
 
   // Устанавливаем callback-функцию для обработки строк.
   void SetStringTokenCallback(const std::function<void(const std::string &)> &);
 
-  void Parser(std::string& str);
+  void Parser(const std::string& str);
 
  private:
   std::function<void()> StartCallback;
