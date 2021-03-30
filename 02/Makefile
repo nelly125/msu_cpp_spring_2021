@@ -4,8 +4,7 @@ WARNINGS= -mfpmath=sse -fstack-protector-all -g -W -Wall -Wextra -Wcast-align -W
 
 FLAGS= -fsanitize=address
 
-all: prog clean run
-test: run
+test:prog clean run
 
 prog: main.o TokenParser.o tests.o
 	$(CC) $(FLAGS) $(WARNINGS) -o prog main.o TokenParser.o tests.o -lm
