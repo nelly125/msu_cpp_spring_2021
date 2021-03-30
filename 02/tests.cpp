@@ -17,10 +17,12 @@ void end() {
 }
 
 void sum_of_numbers (uint64_t number) {
+  std::cout << "Digit was found: " << number << std::endl;
   sum += number;
 }
 
 void sum_of_string_tokens (const std::string& str){
+  std::cout << "String was found: " << str << std::endl;
   token_string += str + ' ';
   string_length +=  str.length();
 }
@@ -57,7 +59,7 @@ void test_2() {
   sum = 0;
   string_length = 0;
   token_string = {};
-  p.Parser(std::string{"-15 10"});
+  p.Parser(std::string{"   -15 10"});
   assert(sum == 10 && string_length == 3);
   std::cout << "TEST_2 RESULT: TEST WITH SIGNED NUMBER IS COMPLETED" << std::endl;
 }

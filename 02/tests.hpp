@@ -18,7 +18,7 @@ void end();
 
 void sum_of_numbers (const uint64_t number);
 
-void sum_of_string_tockens(const std::string& str);
+void sum_of_string_tokens(const std::string& str);
 
 void init_test_1();
 

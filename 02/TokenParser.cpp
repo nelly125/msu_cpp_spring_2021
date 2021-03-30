@@ -69,7 +69,7 @@ void TokenParser::Parser(const std::string& str)
 
 
   while (pos != std::string::npos) {
-    if (pos == 0) {
+    if (begin == pos) {
 	  begin = pos + 1;
 //	  std::cout << "delete" << pos  << str << std::endl;
     }
