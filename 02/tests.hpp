@@ -16,11 +16,9 @@ void end();
 
 /*** Functions for the first test with nullptr ***/
 
-void length_of_string (const std::string& str);
-
 void sum_of_numbers (const uint64_t number);
 
-void final_string(const std::string& str);
+void sum_of_string_tockens(const std::string& str);
 
 void init_test_1();
 
