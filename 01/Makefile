@@ -4,16 +4,20 @@ WARNINGS= -mfpmath=sse -fstack-protector-all -g -W -Wall -Wextra -Wcast-align -W
 
 FLAGS= -fsanitize=address
 
-test: prog clean run
+all: prog clean
+test: run
 
-prog: main.o Allocator.o
-	$(CC) $(FLAGS) $(WARNINGS) -o prog main.o Allocator.o -lm
+prog: main.o TokenParser.o tests.o
+	$(CC) $(FLAGS) $(WARNINGS) -o prog main.o TokenParser.o tests.o -lm
 
 main.o:
 	$(CC) $(FLAGS) $(WARNINGS) -c main.cpp
 
-Allocator.o: Allocator.cpp
-	$(CC) $(FLAGS) $(WARNINGS) -c Allocator.cpp
+TokenParser.o: TokenParser.cpp
+	$(CC) $(FLAGS) $(WARNINGS) -c TokenParser.cpp
+
+tests.o: tests.cpp
+	$(CC) $(FLAGS) $(WARNINGS) -c tests.cpp
 
 .PHONY: clean
 
