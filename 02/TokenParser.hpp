@@ -5,13 +5,12 @@
 #pragma once
 
 #include <functional>
-#include <string>
 
-class TokenParser
-{
+class TokenParser {
  public:
   TokenParser();
   ~TokenParser();
+
   // Set callback-function before parsing.
   void SetStartCallback(const std::function<void()> &);
 
@@ -24,17 +23,17 @@ class TokenParser
   // Set callback-function for string processing.
   void SetStringTokenCallback(const std::function<void(const std::string &)> &);
 
-  void Parser(const std::string& str);
+  void Parser(const std::string &str);
 
  private:
   std::function<void()> StartCallback;
   std::function<void()> FinishCallback;
   std::function<void(uint64_t)> DigitTokenCallback;
-  std::function<void(const std::string&)> StringTokenCallback;
+  std::function<void(const std::string &)> StringTokenCallback;
 
-  bool IsDigit(const std::string& str);
-  uint64_t StrToInt(const std::string& str);
-  void Type_of_token(const std::string& str);
+  bool IsDigit(const std::string &str);
+  uint64_t StrToInt(const std::string &str);
+  void Type_of_token(const std::string &str);
 
 };
 
