@@ -29,7 +29,7 @@ void sum_of_string_tokens(const std::string &str) {
 
 /*** Test without callback functions. ***/
 
-void init_test_1() {
+void test_1() {
   sum = 0;
   token_string = {};
   TokenParser p;
@@ -67,7 +67,7 @@ void test_2() {
 
 /*** MIXED STRING ***/
 
-void test3() {
+void test_3() {
   sum = 0;
   string_length = 0;
   token_string = {};
@@ -82,7 +82,7 @@ void test3() {
 }
 
 /*** String has only delimiters ***/
-void test4() {
+void test_4() {
   sum = 0;
   string_length = 0;
   token_string = {};

@@ -17,10 +17,10 @@ void sum_of_numbers(const uint64_t number);
 
 void sum_of_string_tokens(const std::string &str);
 
-void init_test_1();
+void test_1();
 
 void test_2();
 
-void test3();
+void test_3();
 
-void test4();
+void test_4();
