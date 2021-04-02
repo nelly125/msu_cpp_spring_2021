@@ -102,3 +102,21 @@ void test_4() {
   assert(sum == 0 && string_length == 1);
   std::cout << "TEST_4 RESULT: TEST WITH STRING WITH DELIMITERS IS COMPLETED" << std::endl;
 }
+
+
+
+/*** Digit > uint64 ***/
+
+void test_5() {
+  sum = 0;
+  string_length = 0;
+  token_string = {};
+  TokenParser p;
+  p.SetStartCallback(start);
+  p.SetEndCallback(end);
+  p.SetDigitTokenCallback(sum_of_numbers);
+  p.SetStringTokenCallback(sum_of_string_tokens);
+  p.Parser(std::string{"18446744073709551617"}); //2^64 + 1
+  assert(sum == 0);
+  std::cout << "TEST_5 RESULT: TEST WITH DIGIT > UINT64 IS COMPLETED" << std::endl;
+}
