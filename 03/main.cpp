@@ -16,6 +16,7 @@ void initialization_test() {
   Matrix matrix1(n, m);
   Matrix matrix2(n, n);
   assert(matrix1.getRows() == 3 && matrix1.getColumns() == 5);
+ 
 
   matrix1.Matrix_zeros();
   matrix2.Matrix_unit();
