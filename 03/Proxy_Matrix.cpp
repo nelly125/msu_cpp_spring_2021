@@ -13,14 +13,14 @@ Proxy_Matrix::Proxy_Matrix(size_t n) {
 
 int32_t &Proxy_Matrix::operator[](size_t get_row) const {
   if (get_row >= proxy_row) {
-    throw std::out_of_range("proxy operator [] error: incorrect value operator[] const");
+    throw std::out_of_range("proxy operator [] error: incorrect value operator[] const. Out of bounds");
   }
   return proxy_matrix[get_row];
 }
 
 int32_t &Proxy_Matrix::operator[](size_t get_row) {
   if (get_row >= proxy_row) {
-    throw std::out_of_range("proxy operator [] error: incorrect value operator[]");
+    throw std::out_of_range("proxy operator [] error: incorrect value operator[]. Out of bounds");
   }
   return proxy_matrix[get_row];
 }

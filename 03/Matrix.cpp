@@ -51,14 +51,14 @@ Matrix &Matrix::Matrix_unit() {
 
 Proxy_Matrix &Matrix::operator[](size_t get_row) const {
   if (get_row > rows) {
-    throw std::out_of_range("operator [] error: incorrect value");
+    throw std::out_of_range("operator [] error: incorrect value. Out of bounds");
   }
   return matrix[get_row];
 }
 
 Proxy_Matrix &Matrix::operator[](size_t get_row) {
   if (get_row > rows) {
-    throw std::out_of_range("operator [] error: incorrect value");
+    throw std::out_of_range("operator [] error: incorrect value. Out of bounds");
   }
   return matrix[get_row];
 }

@@ -8,19 +8,18 @@ void initialization_test() {
   size_t n = 0, m = 0;
   try { Matrix matrix0(n, m); }
   catch (const std::out_of_range &oor) {
-    std::cout << "Exception: " << oor.what() << std::endl;
+    std::cout << "Exception: " << oor.what() << "---initialization (0,0)" << std::endl;
   }
 
   /*getRows, getColumns*/
   n = 3, m = 5;
   Matrix matrix1(n, m);
-  Matrix matrix2(n, n);
   assert(matrix1.getRows() == 3 && matrix1.getColumns() == 5);
 
+  /*Unit matrix*/
+  Matrix matrix2(n, n);
   matrix1.Matrix_zeros();
   matrix2.Matrix_unit();
-
-  /*Unit matrix*/
   try { matrix1.Matrix_unit(); }
   catch (const std::out_of_range &oor) {
     std::cout << "Exception: " << oor.what() << std::endl;
@@ -28,7 +27,7 @@ void initialization_test() {
 
   try { matrix1[10][10] = 5; }
   catch (const std::out_of_range &oor) {
-    std::cout << "Exception: " << oor.what() << std::endl;
+    std::cout << "Exception: " << oor.what()  << std::endl;
   }
 
   try { matrix1[1][10] = 5; }
@@ -45,7 +44,12 @@ void arithmetic_operations() {
     size_t row = 10, col = 15;
     Matrix m(row, col);
     m[1][1] = 5;
-    assert(m[1][1] == 5);
+    for (size_t i = 0; i < row; i++)
+      for (size_t j = 0; j < col; j++)
+        if (i == 1 && j == 1)
+          assert(m[1][1] == 5);
+        else
+          assert(m[i][j] == 0);
   }
 
   /*multiplication *= */
@@ -53,11 +57,15 @@ void arithmetic_operations() {
     size_t row = 10, col = 10;
     Matrix matrix1(row, col);
     Matrix matrix2(row, col);
-//    Matrix matrix3(matrix1);
-//    std::cout << matrix3;
     matrix1.Matrix_unit();
     matrix1 *= 5;
-    assert(matrix1[1][1] == 5 && matrix1[0][1] == 0);
+    for (size_t i = 0; i < row; i++)
+      for (size_t j = 0; j < col; j++)
+        if (i == j)
+          assert(matrix1[i][j] == 5);
+        else
+          assert(matrix1[i][j] == 0);
+
   }
   /*equality, inequality*/
   {
@@ -113,6 +121,7 @@ void output() {
     for (size_t j = 0; j < matrix.getColumns(); j++)
       matrix[i][j] = (i + 1)*(j + 1);
   std::cout << matrix << std::endl;
+  std::cout << "TEST_3 RESULT: OUTPUT IS COMPLETED" << std::endl;
 }
 
 int main() {
