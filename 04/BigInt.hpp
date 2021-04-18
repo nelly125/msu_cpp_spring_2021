@@ -45,5 +45,5 @@ class BigInt {
 
   BigInt abs();
   std::string number_to_str();
-  bool is_empty() {return(number == nullptr && !is_negative && size == 0);}
+  bool is_empty() { return (number == nullptr && !is_negative && size == 0); }
 };

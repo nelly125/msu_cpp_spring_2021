@@ -3,7 +3,7 @@
 BigInt::BigInt() : number(nullptr), is_negative(false), size(0) {}
 
 BigInt::~BigInt() {
-  delete [] number;
+  delete[] number;
 }
 
 BigInt::BigInt(const BigInt &temp) {
@@ -104,36 +104,30 @@ std::ostream &operator<<(std::ostream &out, const BigInt &x) {
     if (i != x.size - 1) {
       temp = x.add_zeros(x.number[i]);
       out << temp << ".";
+    } else {
+      out << x.number[i] << ".";
     }
-    else {
-        out << x.number[i] << ".";
-      }
   }
   out << std::endl;
   return out;
 }
 
 BigInt BigInt::operator+(/*const*/ BigInt &right) {
-  if (right.is_negative && is_negative) //-a + -b = - (a + b)
-  {
+  if (right.is_negative && is_negative) { //-a + -b = - (a + b)
     BigInt temp_left(-*this);
     BigInt temp_right(-right);
     return -(temp_left + temp_right);
-  }
-  else if (!is_negative && right.is_negative) { //a + -b = a - b
+  } else if (!is_negative && right.is_negative) { //a + -b = a - b
     BigInt temp_right(-right);
     return *this - temp_right;
-  }
-  else if (is_negative && !right.is_negative) { //-a + b = b - a
+  } else if (is_negative && !right.is_negative) { //-a + b = b - a
     BigInt temp_left(-*this);
     return right - temp_left;
   }
-
   int shift = 0;
   int temp_size = std::max(size, right.size) + 1;
-  int* temp = new int[temp_size];
-  for (int i = 0; i <
-      temp_size; i++)
+  int *temp = new int[temp_size];
+  for (int i = 0; i < temp_size; i++)
     temp[i] = 0;
   int res;
   int i = 0;
@@ -144,14 +138,12 @@ BigInt BigInt::operator+(/*const*/ BigInt &right) {
       temp[i] = right.number[i];
     else if (i >= right.size)
       temp[i] = number[i];
-    else
-    {
+    else {
       res = number[i] + right.number[i] + shift;
       if (den <= res) {
         temp[i] = res - den;
         shift = 1;
-      }
-      else {
+      } else {
         temp[i] = res;
         shift = 0;
       }
@@ -159,8 +151,7 @@ BigInt BigInt::operator+(/*const*/ BigInt &right) {
     i++;
   }
 
-  for (int i = temp_size - 1; i >=0 && temp_size != 1; i--)
-  {
+  for (int i = temp_size - 1; i >= 0 && temp_size != 1; i--) {
     if (temp[i] == 0)
       temp_size--;
     else
@@ -177,29 +168,26 @@ BigInt BigInt::operator+(/*const*/ BigInt &right) {
 }
 
 BigInt BigInt::operator-(BigInt &right) {
-  if (right.is_negative && is_negative) //-a - -b = - (a - b) -5 - -7 = -5 + 7 =  - (-7 +  - 5)
-  {
+  if (right.is_negative && is_negative) { //-a - -b = - (a - b) -5 - -7 = -5 + 7 =  - (-7 +  - 5)
     BigInt temp_left(-*this);
     BigInt temp_right(-right);
     return -(temp_left - temp_right);
-  }
-  else if (!is_negative && right.is_negative) { //a - -b = a + b
+  } else if (!is_negative && right.is_negative) { //a - -b = a + b
     BigInt temp(-right);
     return *this + temp;
-  }
-  else if (is_negative && !right.is_negative) { //-a - b = - ( a+ b)
+  } else if (is_negative && !right.is_negative) { //-a - b = - ( a+ b)
     BigInt temp(-*this);
     return -(temp + right);
   }
 
   bool sgn = false;
-  if ((*this).abs() < right.abs()){
+  if ((*this).abs() < right.abs()) {
     return -(right - *this);
   }
 
   int shift = 0;
   int temp_size = std::max(size, right.size);
-  int* temp = new int[temp_size];
+  int *temp = new int[temp_size];
   for (int i = 0; i < temp_size; i++)
     temp[i] = 0;
   int res;
@@ -207,32 +195,26 @@ BigInt BigInt::operator-(BigInt &right) {
   while (i < temp_size) {
     if (i >= right.size) {
       res = shift;
-      if (number[i] < res)
-      {
+      if (number[i] < res) {
         temp[i] = den + number[i] - res;
         shift = 1;
-      }
-      else {
+      } else {
         temp[i] = number[i] - res;
         shift = 0;
       }
-    }
-    else
-    {
+    } else {
       res = right.number[i] + shift;
-      if (number[i] < res)
-      {
+      if (number[i] < res) {
         temp[i] = den + number[i] - res;
         shift = 1;
-      }
-      else {
+      } else {
         temp[i] = number[i] - res;
         shift = 0;
       }
     }
     i++;
   }
-  for (int i = temp_size - 1; i >=0 && temp_size != 1; i--) {
+  for (int i = temp_size - 1; i >= 0 && temp_size != 1; i--) {
     if (temp[i] == 0)
       temp_size--;
     else
@@ -247,27 +229,26 @@ BigInt BigInt::operator-(BigInt &right) {
     result.is_negative = true;
   for (int i = 0; i < result.size; i++)
     result.number[i] = temp[i];
-  delete [] temp;
+  delete[] temp;
   return result;
 }
 
 BigInt BigInt::operator*(const BigInt &right) {
   int shift;
   int temp_size = size + right.size;
-  int* temp = new int[temp_size];
+  int *temp = new int[temp_size];
   for (int i = 0; i < temp_size; i++)
     temp[i] = 0;
   long long int res;
   for (int i = 0; i < size; i++) {
     shift = 0;
     for (int j = 0; j < right.size; j++) {
-      res = temp[i + j] + number[i] *1LL* (j < right.size ? right.number[j] : 0) + shift;
-      temp[i + j] = static_cast<int>(res % den);
-      shift = static_cast<int>(res / den);
+      res = temp[i + j] + number[i]*1LL*(j < right.size ? right.number[j] : 0) + shift;
+      temp[i + j] = static_cast<int>(res%den);
+      shift = static_cast<int>(res/den);
     }
   }
-  for (int i = temp_size - 1; i >=0 && temp_size != 1; i--)
-  {
+  for (int i = temp_size - 1; i >= 0 && temp_size != 1; i--) {
     if (temp[i] == 0)
       temp_size--;
     else
@@ -309,7 +290,7 @@ BigInt BigInt::operator-(int int_right) {
 }
 BigInt BigInt::operator*(int int_right) {
   BigInt right(int_right);
-  return (*this) * right;
+  return (*this)*right;
 }
 
 BigInt BigInt::operator=(const BigInt &temp_number) {
@@ -341,8 +322,7 @@ std::string BigInt::number_to_str() {
     if (i != size - 1) {
       temp = add_zeros(number[i]);
       s += temp;
-    }
-    else {
+    } else {
       s += std::to_string(number[i]);
     }
   }
@@ -385,8 +365,7 @@ bool BigInt::operator<(const BigInt &temp_number) {
       if (number[i] >= temp_number.number[i]) {
         return false;
       }
-  }
-  else {
+  } else {
     for (int i = size - 1; i >= 0; i--)
       if (number[i] <= temp_number.number[i]) {
         return false;

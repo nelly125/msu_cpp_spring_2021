@@ -1,14 +1,10 @@
-//
-// Created by nelly on 4/15/21.
-//
-
 #include "tests.hpp"
 
 void delete_initial_zeros(std::string &str) {
   std::string temp_str = str.substr(1);
   temp_str.erase(0, temp_str.find_first_not_of('0'));
-  if(str[0] == '-')
-    str = '-' +  temp_str;
+  if (str[0] == '-')
+    str = '-' + temp_str;
   else
     str = temp_str;
 }
@@ -65,10 +61,11 @@ void test_input() {
 
   BigInt big_int_4("100000000000000000000000000000000000000000000000000000000000000000000000000");
   assert(big_int_4.number_to_str() == "100000000000000000000000000000000000000000000000000000000000000000000000000");
+
+  std::cout << "TEST_1 RESULT: INPUT TEST IS COMPLETED" << std::endl;
 }
 
-void test_equality()
-{
+void test_equality() {
   std::string s1 = "-012345678912345671";
   BigInt big_int_1(s1);
   BigInt big_int_2(-1234567);
@@ -83,6 +80,8 @@ void test_equality()
   BigInt big_int_4;
   res = big_int_1 == big_int_4;
   assert(res == false);
+
+  std::cout << "TEST_2 RESULT: EQUALITY TEST IS COMPLETED" << std::endl;
 }
 
 void test_compare() {
@@ -173,6 +172,8 @@ void test_compare() {
   //negative >= negative
   res = -(big_int_7) >= -(big_int_8);
   assert(res == true);
+
+  std::cout << "TEST_3 RESULT: COMPARE TEST IS COMPLETED" << std::endl;
 }
 
 void operator_equal() {
@@ -191,9 +192,12 @@ void operator_equal() {
   check_s1 = big_int_1.number_to_str();
   check_s2 = big_int_1.number_to_str();
   assert(check_s1 == check_s2);
+
+  std::cout << "TEST_4 RESULT: OPERATOR EQUALITY TEST IS COMPLETED" << std::endl;
+
 }
 
-void test_addition(){
+void test_addition() {
   BigInt big_int_1("11111111111111111111111111"); //pos + pos
   BigInt big_int_2("99999999999999999999999999");
   BigInt big_int_3;
@@ -230,6 +234,8 @@ void test_addition(){
   int x = 1;
   BigInt big_int_14 = big_int_13 + x;
   assert(big_int_14.number_to_str() == "111111111111111111112");
+
+  std::cout << "TEST_5 RESULT: ADDITION TEST IS COMPLETED" << std::endl;
 }
 
 void test_subtraction() {
@@ -261,25 +267,30 @@ void test_subtraction() {
   int x = 1;
   BigInt big_int_14 = big_int_13 - x;
   assert(big_int_14.number_to_str() == "111111111111111111110");
+
+  std::cout << "TEST_6 RESULT: SUBTRACTION TEST IS COMPLETED" << std::endl;
+
 }
 
 void test_multiplication() {
   BigInt big_int_1("-10000000000000001");
   BigInt big_int_2("22222222222222222222222");
   BigInt big_int_3;
-  big_int_3 = big_int_1 * big_int_2;
+  big_int_3 = big_int_1*big_int_2;
   assert(big_int_3.number_to_str() == "-222222222222244444442222222222222222");
 
   BigInt big_int_4("0");
   BigInt big_int_5("5");
-  BigInt big_int_6 = big_int_4 * big_int_5;
+  BigInt big_int_6 = big_int_4*big_int_5;
   assert(big_int_6 == 0);
 
-  for (size_t i = 12345678; i < 10000000 * 10; i+=500000) {
-    for (size_t j = 12345678; j < 10000000 * 10; j+=500000) {
+  for (size_t i = 12345678; i < 10000000*10; i += 500000) {
+    for (size_t j = 12345678; j < 10000000*10; j += 500000) {
       BigInt big_int_7(i);
       BigInt big_int_8(j);
-      assert((big_int_7*big_int_8).number_to_str() == std::to_string(i * j));
+      assert((big_int_7*big_int_8).number_to_str() == std::to_string(i*j));
     }
   }
+
+  std::cout << "TEST_7 RESULT: MULTIPLICATION TEST IS COMPLETED" << std::endl;
 }

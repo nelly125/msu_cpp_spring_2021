@@ -1,6 +1,5 @@
 #include "tests.hpp"
 
-
 int main() {
   test_input();
   test_equality();
@@ -9,5 +8,6 @@ int main() {
   test_addition();
   test_subtraction();
   test_multiplication();
+  return 0;
 }
 
