@@ -25,16 +25,12 @@ void SaveTest() {
   Data x = {1, true, 2};
 
   std::stringstream stream;
-
   Serializer serializer(stream);
   Error status = serializer.save(x);
-
   assert(status == Error::NoError);
   assert(stream.str() == "1 true 2");
-//  std::cout <<"." << stream.str() <<"." << std::endl;
 
   std::cout << "TEST_1 RESULT: SAVE TEST IS COMPLETED" << std::endl;
-
 }
 
 void LoadTest() {
