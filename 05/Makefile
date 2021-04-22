@@ -1,0 +1,28 @@
+CC=g++ --std=c++17
+
+WARNINGS= -mfpmath=sse -fstack-protector-all -g -W -Wall -Wextra -Wcast-align -Werror -pedantic -pedantic-errors -Wfloat-equal -Wpointer-arith -Wformat-security -Wmissing-format-attribute -Wformat=1 -Wwrite-strings -Wcast-align -Wno-long-long -Woverloaded-virtual -Wnon-virtual-dtor -Wcast-qual -Wno-suggest-attribute=format
+
+FLAGS= -fsanitize=address
+
+test:prog clean run
+
+prog: main.o Serializer.o Deserializer.o
+	$(CC) $(FLAGS) $(WARNINGS) -o prog main.o Serializer.o Deserializer.o -lm
+
+main.o:
+	$(CC) $(FLAGS) $(WARNINGS) -c main.cpp
+
+Serializer.o: Serializer.cpp
+	$(CC) $(FLAGS) $(WARNINGS) -c Serializer.cpp
+
+Deserializer.o: Deserializer.cpp
+	$(CC) $(FLAGS) $(WARNINGS) -c Deserializer.cpp
+
+
+.PHONY: clean
+
+clean:
+	rm -rf *.o
+
+run:
+	./prog
