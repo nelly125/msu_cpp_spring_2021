@@ -5,8 +5,14 @@
 #pragma once
 
 #include <functional>
+#include <vector>
+#include <cstring>
 
 class TokenParser {
+ private:
+  std::vector<std::string> log_str;
+  std::vector<bool> log_is_digit;
+  size_t count = 0;
  public:
   TokenParser();
   ~TokenParser();
@@ -25,6 +31,10 @@ class TokenParser {
 
   void Parser(const std::string &str);
 
+  std::string get_log_str(const size_t i) { return log_str[i]; }
+  bool get_log_is_digit(const size_t i) { return log_is_digit[i]; }
+  size_t get_count() { return count; }
+
  private:
   std::function<void()> StartCallback;
   std::function<void()> FinishCallback;
@@ -36,6 +46,10 @@ class TokenParser {
   void Type_of_token(const std::string &str);
 
 };
+
+
+
+
 
 
 
