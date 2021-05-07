@@ -10,6 +10,7 @@ int main() {
   test_multiplication();
   test_move_operator();
   test_numbers_den();
+  test_zero();
 
   return 0;
 }

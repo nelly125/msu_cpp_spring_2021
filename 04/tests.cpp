@@ -359,3 +359,34 @@ void test_numbers_den() {
 
   std::cout << "TEST_9 RESULT: NUMBERS DEN TEST IS COMPLETED" << std::endl;
 }
+
+void test_zero() {
+  BigInt big_int_1("1000000");
+  BigInt big_int_2("0");
+  BigInt big_int_3;
+
+  big_int_3 = big_int_1 + big_int_2;
+  assert(big_int_3.number_to_str() == "1000000");
+  assert(big_int_3 == big_int_1);
+
+  big_int_3 = big_int_1 - big_int_2;
+  assert(big_int_3.number_to_str() == "1000000");
+  assert(big_int_3 == big_int_1);
+
+  big_int_3 = big_int_1 * big_int_2;
+  assert(big_int_3.number_to_str() == "0");
+
+  big_int_3 = big_int_1 + 0;
+  assert(big_int_3.number_to_str() == "1000000");
+  assert(big_int_3 == big_int_1);
+
+  big_int_3 = big_int_1 - 0;
+  assert(big_int_3.number_to_str() == "1000000");
+  assert(big_int_3 == big_int_1);
+
+  big_int_3 = big_int_1 * 0;
+  assert(big_int_3.number_to_str() == "0");
+
+  std::cout << "TEST_10 RESULT: ZERO TEST IS COMPLETED" << std::endl;
+
+}
