@@ -74,6 +74,7 @@ void push_back_test() {
     assert(std_vector_result.str() == my_vector_result.str());
   }
 
+  std::cout << "TEST_1 RESULT: INIT TEST IS COMPLETED" << std::endl;
 }
 
 void iterator_test() {
@@ -86,6 +87,8 @@ void iterator_test() {
       assert(*i == *j);
     }
   }
+
+  std::cout << "TEST_2 RESULT: ITERATOR TEST IS COMPLETED" << std::endl;
 }
 
 void emplace_test() {
@@ -105,6 +108,8 @@ void emplace_test() {
 
   Vector<Item> my_vector;
   my_vector.emplace_back(1, 2, 3);
+
+  std::cout << "TEST_3 RESULT: EMPLACE TEST IS COMPLETED" << std::endl;
 }
 
 void operator_brackets_test() {
@@ -133,6 +138,7 @@ void operator_equality_test() {
   std_vector_copy = std::move(std_vector);
   assert(std_vector_copy == my_vector_copy);
 
+  std::cout << "TEST_4 RESULT: OPERATOR EQUALITY TEST IS COMPLETED" << std::endl;
 }
 
 void constructors_test() {
@@ -155,6 +161,9 @@ void constructors_test() {
   Vector<std::string> my_words4(std::move(my_words1));
   assert(my_words4 == my_words2);
   assert(my_words1.empty());
+
+  std::cout << "TEST_5 RESULT: CONSTRUCTOR TEST IS COMPLETED" << std::endl;
+
 }
 
 void resize_reverse_test() {
@@ -180,6 +189,9 @@ void resize_reverse_test() {
   assert(my_vector.capacity() == 30);
   assert(my_vector.size() == 25);
   assert(std_vector == my_vector);
+
+  std::cout << "TEST_6 RESULT: RESIZE & REVERSE TEST IS COMPLETED" << std::endl;
+
 }
 
 void empty_test() {
@@ -191,6 +203,9 @@ void empty_test() {
 
   my_vector.clear();
   assert(my_vector.empty() == true);
+
+  std::cout << "TEST_7 RESULT: EMPTY TEST IS COMPLETED" << std::endl;
+
 }
 
 void ostream_test() {
@@ -200,6 +215,8 @@ void ostream_test() {
   std::stringstream ss;
   ss << my_vector;
   assert(ss.str() == "1 2 3");
+
+  std::cout << "TEST_8 RESULT: OSTREAM TEST IS COMPLETED" << std::endl;
 }
 
 int main() {

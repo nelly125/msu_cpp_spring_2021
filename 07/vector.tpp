@@ -1,12 +1,8 @@
-//
-// Created by nelly on 5/3/21.
-//
 template<typename T, class Alloc_T>
 Vector<T, Alloc_T>::Vector(const Vector &temp){
   size_ = temp.size_;
   capacity_ = temp.capacity_;
   data_ = allocator_.allocate(temp.capacity_);
-  std::cout << temp.size_ << std::endl;
   for (size_t i = 0; i < temp.size_; i++) {
     allocator_.construct(data_+ i, temp[i]);
   }
@@ -28,7 +24,6 @@ Vector<T, Alloc_T>::Vector(std::initializer_list<T> &&list, const Alloc_T &alloc
     capacity_(list.size()),
     allocator_(alloc) {
   data_ = allocator_.allocate(capacity_);
-//  std::cout << capacity_ << std::endl;
   size_t i = 0;
   for (auto value: list) {
     allocator_.construct(data_ + i++, std::move(value));
