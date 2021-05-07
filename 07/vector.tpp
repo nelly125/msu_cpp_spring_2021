@@ -153,39 +153,11 @@ size_t Vector<T, Alloc_T>::size() const {
 
 template<typename T, class Alloc_T>
 void Vector<T, Alloc_T>::resize(size_t new_size, const T &value) {
-/*  if (new_size > size_) {
-    if (new_size > capacity_)
-      allocator_.reserve(new_size);
-    for (T *i = size_ + 1; i < new_size; i++)
-      allocator_.construct(std::move(i));
-  }
-  if (new_size < size_) {
-    for (T *i = data_ + size_; i > data_ + new_size; i--)
-      allocator_.destroy(i);
-  }
-  size_ = new_size;*/
   if (capacity_ < new_size) {
     reserve(new_size);
-    fill(data_ + size_, data_ + size_, value);
-//    std::cout  << value;
+    fill(data_ + size_, data_ + new_size, value);
   }
   size_ = new_size;
-/*  if (size_ < new_size)
-    size_ = new_size;
-  else {
-    size_t old_size_ = size_;
-
-    if (new_size > capacity_) {
-      capacity_ = capacity_ ? 2 * new_size : 1;
-      Vector<T, Alloc_T> new_vector(capacity_);
-      std::move(begin(), end(), new_vector.begin());
-      this -> ~ Vector();
-      *this = std::move(new_vector);
-    }
-    size_ = new_size;
-    std::fill(begin() + old_size_, begin() + size_, value);
-  }*/
-
 }
 
 template<typename T, class Alloc_T>

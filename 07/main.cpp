@@ -22,15 +22,6 @@ void init_test() {
   }
 
   {
-    Vector<int> my_vector = {1, 2, 3};
-    assert(my_vector.size() == 3 && my_vector.capacity() == 3);
-
-    std::stringstream ss;
-    ss << my_vector;
-    assert(ss.str() == "1 2 3");
-  }
-
-  {
     Vector<std::string> my_vector{"it", "is", "my", "vector"};
     std::vector<std::string> test_vector{"it", "is", "my", "vector"};
     assert(test_vector == my_vector);
@@ -38,7 +29,7 @@ void init_test() {
 
 }
 
-void methods_test() {
+void push_back_test() {
   {
     Vector<int> my_vector;
     my_vector.push_back(1);
@@ -59,47 +50,6 @@ void methods_test() {
       std::cout << my_vector[2];
     }
     catch (const std::out_of_range &) {};
-  }
-
-
-/*  size_t j = 1;
-  for (int i = 1; i <= 10; i++, j++) {
-    my_vector.push_back(i);
-    assert(my_vector.size() == j);
-  }
-  assert(my_vector.capacity() == 16);*/
-
-//  my_vector.resize(20, 0);
-//  assert(my_vector.size() == 20);
-//  for(auto& el: my_vector) std::cout << el << ' ';
-//  std::cout << my_vector[1];
-
-
-  {
-    Vector<int> my_vector;
-
-    my_vector.resize(5, 0);
-    assert(my_vector.size() == 5);
-//    std::cout << my_vector[1];
-
-    my_vector.resize(25);
-    assert(my_vector.size() == 25);
-    assert(my_vector.capacity() == 25);
-
-    my_vector.reserve(30);
-    assert(my_vector.capacity() == 30);
-    assert(my_vector.size() == 25);
-  }
-
-  {
-    Vector<int> my_vector;
-    assert(my_vector.empty() == true);
-
-    my_vector.push_back(1);
-    assert(my_vector.empty() == false);
-
-    my_vector.clear();
-    assert(my_vector.empty() == true);
   }
 
   {
@@ -207,14 +157,62 @@ void constructors_test() {
   assert(my_words1.empty());
 }
 
+void resize_reverse_test() {
+  Vector<int> my_vector;
+  std::vector<int> std_vector;
+
+  my_vector.resize(5, 0);
+  std_vector.resize(5, 0);
+
+  assert(my_vector.size() == 5);
+  assert(std_vector == my_vector);
+
+  my_vector.resize(25);
+  std_vector.resize(25);
+
+  assert(my_vector.size() == 25);
+  assert(my_vector.capacity() == 25);
+  assert(std_vector == my_vector);
+
+  my_vector.reserve(30);
+  std_vector.reserve(30);
+
+  assert(my_vector.capacity() == 30);
+  assert(my_vector.size() == 25);
+  assert(std_vector == my_vector);
+}
+
+void empty_test() {
+  Vector<int> my_vector;
+  assert(my_vector.empty() == true);
+
+  my_vector.push_back(1);
+  assert(my_vector.empty() == false);
+
+  my_vector.clear();
+  assert(my_vector.empty() == true);
+}
+
+void ostream_test() {
+  Vector<int> my_vector = {1, 2, 3};
+  assert(my_vector.size() == 3 && my_vector.capacity() == 3);
+
+  std::stringstream ss;
+  ss << my_vector;
+  assert(ss.str() == "1 2 3");
+}
+
 int main() {
   init_test();
-  methods_test();
+  push_back_test();
   iterator_test();
   emplace_test();
   operator_brackets_test();
   operator_equality_test();
   constructors_test();
+  resize_reverse_test();
+  empty_test();
+  ostream_test();
 
   return 0;
 }
