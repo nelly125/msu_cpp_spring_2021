@@ -112,7 +112,7 @@ std::ostream &operator<<(std::ostream &out, const BigInt &x) {
   return out;
 }
 
-BigInt BigInt::operator+(/*const*/ BigInt &right) {
+BigInt BigInt::operator+(const BigInt &right) const {
   if (right.is_negative && is_negative) { //-a + -b = - (a + b)
     BigInt temp_left(-*this);
     BigInt temp_right(-right);
@@ -167,7 +167,7 @@ BigInt BigInt::operator+(/*const*/ BigInt &right) {
   return result;
 }
 
-BigInt BigInt::operator-(BigInt &right) {
+BigInt BigInt::operator-(const BigInt &right) const {
   if (right.is_negative && is_negative) { //-a - -b = - (a - b) -5 - -7 = -5 + 7 =  - (-7 +  - 5)
     BigInt temp_left(-*this);
     BigInt temp_right(-right);
@@ -180,8 +180,11 @@ BigInt BigInt::operator-(BigInt &right) {
     return -(temp + right);
   }
 
+  BigInt temp_left(*this);
+  BigInt temp_right(right);
+
   bool sgn = false;
-  if ((*this).abs() < right.abs()) {
+  if (temp_left.abs() < temp_right.abs()) {
     return -(right - *this);
   }
 
@@ -233,7 +236,7 @@ BigInt BigInt::operator-(BigInt &right) {
   return result;
 }
 
-BigInt BigInt::operator*(const BigInt &right) {
+BigInt BigInt::operator*(const BigInt &right) const {
   int shift;
   int temp_size = size + right.size;
   int *temp = new int[temp_size];
@@ -246,9 +249,17 @@ BigInt BigInt::operator*(const BigInt &right) {
       res = temp[i + j] + number[i]*1LL*(j < right.size ? right.number[j] : 0) + shift;
       temp[i + j] = static_cast<int>(res%den);
       shift = static_cast<int>(res/den);
+//      std::cout << temp[i + j] << std:: endl;
     }
   }
+//  std::cout << shift  << std::endl;
+
+  if (shift == 1)
+    temp[temp_size - 1] = 1;
+
   for (int i = temp_size - 1; i >= 0 && temp_size != 1; i--) {
+//    if (size == 1 && right.size == 1 && shift)
+//      temp[temp_size - 1] = 1;
     if (temp[i] == 0)
       temp_size--;
     else
@@ -279,16 +290,16 @@ BigInt BigInt::operator-() const {
   return result;
 }
 
-BigInt BigInt::operator+(int int_right) {
+BigInt BigInt::operator+(const int int_right) const {
   BigInt right(int_right);
   return *this + right;
 }
-BigInt BigInt::operator-(int int_right) {
+BigInt BigInt::operator-(const int int_right) const {
   BigInt right(int_right);
   return *this - right;
 
 }
-BigInt BigInt::operator*(int int_right) {
+BigInt BigInt::operator*(const int int_right) const {
   BigInt right(int_right);
   return (*this)*right;
 }
@@ -303,6 +314,24 @@ BigInt BigInt::operator=(const BigInt &temp_number) {
   number = new int[size];
   for (int i = 0; i < size; i++)
     number[i] = temp_number.number[i];
+  return *this;
+}
+
+BigInt BigInt::operator=(BigInt &&temp_number) {
+  if (this == &temp_number)
+    return *this;
+  if (number != nullptr)
+    delete[] number;
+  is_negative = temp_number.is_negative;
+  size = temp_number.size;
+  number = new int[size];
+  for (int i = 0; i < size; i++)
+    number[i] = temp_number.number[i];
+
+  delete[]temp_number.number;
+  temp_number.number = nullptr;
+  temp_number.size = 0;
+  temp_number.is_negative = 0;
   return *this;
 }
 
@@ -329,7 +358,7 @@ std::string BigInt::number_to_str() {
   return s;
 }
 
-bool BigInt::operator==(const BigInt &temp_number) {
+bool BigInt::operator==(const BigInt &temp_number) const{
   if (this->size != temp_number.size)
     return false;
   if (this->is_negative != temp_number.is_negative)
@@ -340,7 +369,7 @@ bool BigInt::operator==(const BigInt &temp_number) {
   return true;
 }
 
-bool BigInt::operator!=(const BigInt &temp_number) {
+bool BigInt::operator!=(const BigInt &temp_number) const{
   if (this->size != temp_number.size)
     return true;
   if (this->is_negative != temp_number.is_negative)
@@ -351,7 +380,7 @@ bool BigInt::operator!=(const BigInt &temp_number) {
   return true;
 }
 
-bool BigInt::operator<(const BigInt &temp_number) {
+bool BigInt::operator<(const BigInt &temp_number) const{
   if (*this == temp_number)
     return false;
   if (this->is_negative && !temp_number.is_negative)
@@ -374,12 +403,12 @@ bool BigInt::operator<(const BigInt &temp_number) {
   return true;
 }
 
-bool BigInt::operator>(const BigInt &temp_number) {
+bool BigInt::operator>(const BigInt &temp_number) const{
   bool flag = -(*this) < -temp_number;
   return flag;
 }
 
-bool BigInt::operator<=(const BigInt &temp_number) {
+bool BigInt::operator<=(const BigInt &temp_number) const{
   if (*this == temp_number)
     return true;
   if (this->is_negative && !temp_number.is_negative)
@@ -402,7 +431,7 @@ bool BigInt::operator<=(const BigInt &temp_number) {
   return true;
 }
 
-bool BigInt::operator>=(const BigInt &temp_number) {
+bool BigInt::operator>=(const BigInt &temp_number) const{
   bool flag = -(*this) <= -temp_number;
   return flag;
 }

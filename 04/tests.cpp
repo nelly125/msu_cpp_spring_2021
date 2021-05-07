@@ -70,16 +70,12 @@ void test_equality() {
   BigInt big_int_1(s1);
   BigInt big_int_2(-1234567);
   BigInt big_int_3(big_int_2);
-  bool res;
-  res = big_int_2 == big_int_3;
-  assert(res == true);
-  res = (-big_int_2) == big_int_3;
-  assert(res == false);
-  res = big_int_1 == big_int_3;
-  assert(res == false);
   BigInt big_int_4;
-  res = big_int_1 == big_int_4;
-  assert(res == false);
+
+  assert(big_int_2 == big_int_3);
+  assert((-big_int_2) != big_int_3);
+  assert(big_int_1 != big_int_3);
+  assert(big_int_1 != big_int_4);
 
   std::cout << "TEST_2 RESULT: EQUALITY TEST IS COMPLETED" << std::endl;
 }
@@ -293,4 +289,68 @@ void test_multiplication() {
   }
 
   std::cout << "TEST_7 RESULT: MULTIPLICATION TEST IS COMPLETED" << std::endl;
+}
+
+void test_move_operator() {
+  BigInt big_int_1("123456789");
+  BigInt big_int_2(big_int_1);
+  BigInt big_int_3;
+
+  big_int_3 = std::move(big_int_1);
+  assert(big_int_3 == big_int_2);
+  assert(big_int_1.is_empty());
+
+  std::cout << "TEST_8 RESULT: MOVE OPERATOR TEST IS COMPLETED" << std::endl;
+}
+
+void test_numbers_den() {
+  {
+    BigInt big_int_1("999999");
+    BigInt big_int_2("1");
+    BigInt big_int_3;
+    BigInt big_int_4;
+
+    big_int_3 = big_int_1 + big_int_2; //999999 + 1 = 1000000
+    assert(big_int_3.number_to_str() == "1000000");
+
+    big_int_4 = big_int_3 - big_int_2;
+    assert(big_int_4 == big_int_1);  //1000000 - 1 = 999999
+  }
+
+  {
+    BigInt big_int_1("1000000");
+    BigInt big_int_2("1000000000000");
+    BigInt big_int_3;
+    BigInt big_int_4;
+
+    big_int_3 = big_int_1 * big_int_1; // den * den = den^2
+    assert(big_int_3 == big_int_2);
+
+    big_int_4  = big_int_3 * big_int_1; // den^2 * den = den^3
+    assert(big_int_4.number_to_str() == "1000000000000000000");
+  }
+
+  {
+    BigInt big_int_1("1000");
+    BigInt big_int_2("1000000");
+    BigInt big_int_3;
+    BigInt big_int_4;
+    BigInt big_int_5(10);
+
+    big_int_3 = big_int_1 * 1000; //
+    assert(big_int_3 == big_int_2);
+
+    big_int_4  = big_int_3 * big_int_1; // den^2 * den = den^3
+    assert(big_int_4.number_to_str() == "1000000000");
+
+  std::string result = "10";
+    for (int i = 1; i < 100 ; i ++) { //10...10^100 проверяет варианты чисел, кратных den
+      big_int_5 = big_int_5 * 10;
+      result += "0";
+      assert(big_int_5.number_to_str() == result);
+//      std::cout << i + 1 << " " << big_int_5.number_to_str() << std::endl;
+    }
+  }
+
+  std::cout << "TEST_9 RESULT: NUMBERS DEN TEST IS COMPLETED" << std::endl;
 }

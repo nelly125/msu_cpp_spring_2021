@@ -11,4 +11,6 @@ void operator_equal();
 void test_addition();
 void test_subtraction();
 void test_multiplication();
+void test_move_operator();
+void test_numbers_den();
 

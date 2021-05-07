@@ -8,6 +8,9 @@ int main() {
   test_addition();
   test_subtraction();
   test_multiplication();
+  test_move_operator();
+  test_numbers_den();
+
   return 0;
 }
 
