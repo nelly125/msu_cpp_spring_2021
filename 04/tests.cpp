@@ -315,6 +315,11 @@ void test_numbers_den() {
 
     big_int_4 = big_int_3 - big_int_2;
     assert(big_int_4 == big_int_1);  //1000000 - 1 = 999999
+
+    big_int_4 = big_int_4 + 2;
+    big_int_4 = big_int_4 - 1;
+    assert(big_int_4 == big_int_3);  //1000001 - 1 = 1000000
+
   }
 
   {
