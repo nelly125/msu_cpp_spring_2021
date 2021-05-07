@@ -66,7 +66,7 @@ Vector<T, Alloc_T> &Vector<T, Alloc_T>::operator=(const Vector &temp) {
 }
 
 template<typename T, class Alloc_T>
-Vector<T, Alloc_T> &Vector<T, Alloc_T>::operator=(const Vector &&temp) noexcept {
+Vector<T, Alloc_T> &Vector<T, Alloc_T>::operator=(Vector &&temp) noexcept {
   if (temp.size_ <= capacity_) {
     std::copy(temp.data_, temp.data_ + temp.size_, data_);
     size_ = temp.size_;
@@ -99,15 +99,14 @@ template<typename T, class Alloc_T>
 void Vector<T, Alloc_T>::push_back(const T &temp) {
   if (size_ == capacity_)
     reserve(capacity_ ? capacity_*2 : 1);
-  allocator_.construct(data_ + size_, std::move(temp));
+  allocator_.construct(data_ + size_, temp);
   size_++;
 }
 template<typename T, class Alloc_T>
 void Vector<T, Alloc_T>::push_back(T &&temp) {
   if (size_ == capacity_)
     reserve(capacity_ ? capacity_*2 : 1);
-  allocator_.construct(data_ + size_, std::move(temp));
-  size_++;
+  allocator_.construct(data_ + size_++, std::move(temp));
 }
 
 template<typename T, class Alloc_T>
@@ -128,7 +127,7 @@ T& Vector<T, Alloc_T>::emplace_back(Args &&... args) {
 //  return *data_;
 
   auto elem = new (data_ + size_) T(std::move(args)...);
-  ++size_;
+  size_++;
   return *elem;
 }
 template<typename T, class Alloc_T>

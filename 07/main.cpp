@@ -102,12 +102,20 @@ void emplace_test() {
     assert(std_vector == my_vector);
   }
   struct Item {
-    int a, b, c;
-    Item(int a, int b, int c) : a(a), b(b), c(c) {}
+    int a;
+    bool b;
+    int c;
+    Item(int a, bool b, int c) : a(a), b(b), c(c) {}
   };
 
   Vector<Item> my_vector;
-  my_vector.emplace_back(1, 2, 3);
+  std::vector<Item> std_vector;
+
+  my_vector.emplace_back(1, true, 3);
+
+  assert(my_vector[0].a == 1);
+  assert(my_vector[0].b == true);
+  assert(my_vector[0].c == 3);
 
   std::cout << "TEST_3 RESULT: EMPLACE TEST IS COMPLETED" << std::endl;
 }
@@ -163,7 +171,6 @@ void constructors_test() {
   assert(my_words1.empty());
 
   std::cout << "TEST_5 RESULT: CONSTRUCTOR TEST IS COMPLETED" << std::endl;
-
 }
 
 void resize_reverse_test() {
@@ -191,7 +198,6 @@ void resize_reverse_test() {
   assert(std_vector == my_vector);
 
   std::cout << "TEST_6 RESULT: RESIZE & REVERSE TEST IS COMPLETED" << std::endl;
-
 }
 
 void empty_test() {

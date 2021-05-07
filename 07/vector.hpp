@@ -36,7 +36,7 @@ class Vector {
   Vector(const Vector &temp);
   Vector(Vector &&temp) noexcept;
   Vector &operator=(const Vector &temp);
-  Vector &operator=(const Vector &&temp) noexcept;
+  Vector &operator=(Vector &&temp) noexcept;
   T &operator[](size_t i);
   const T &operator[](size_t i) const;
 
@@ -71,6 +71,10 @@ class Vector {
   }
 
   constexpr bool operator==(const Vector<T, Alloc_T> &right);
+
+  constexpr T& back() {
+    return *(data_ + size_ - 1);
+  }
 
 };
 
