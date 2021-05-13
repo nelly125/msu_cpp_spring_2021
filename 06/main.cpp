@@ -124,42 +124,42 @@ void incorrect_test_update() {
   }
 
   try {
-    auto text = format("{}", 2);
-  } catch (const inv_arg_exc &err) {
-    std::string catch_error("incorrect input");
-    assert(err.what() == catch_error);
-  }
-
-  try {
-    auto text = format("{}");
-  } catch (const inv_arg_exc &err) {
-    std::string catch_error("incorrect input");
-    assert(err.what() == catch_error);
-  }
-
-  try {
-    auto text = format("{abcd}");
-  } catch (const inv_arg_exc &err) {
-    std::string catch_error("incorrect input");
-    assert(err.what() == catch_error);
-  }
-
-  try {
-    auto text = format("{18446744073709551616}", 1);
-  } catch (const inv_arg_exc &err) {
-    std::string catch_error("incorrect input");
-    assert(err.what() == catch_error);
-  }
-
-  try {
-    auto text = format("{1}+{1} = {0}", 2);
+    auto text = format("{1}", 2); //одиночный out of range
   } catch (const inv_arg_exc &err) {
     std::string catch_error("out of range args");
     assert(err.what() == catch_error);
   }
 
   try {
-    auto text = format("{1}+{1} = {0}", 2, 3, 4);
+    auto text = format("{}"); //не число
+  } catch (const inv_arg_exc &err) {
+    std::string catch_error("incorrect input");
+    assert(err.what() == catch_error);
+  }
+
+  try {
+    auto text = format("{abcd}"); //не число
+  } catch (const inv_arg_exc &err) {
+    std::string catch_error("incorrect input");
+    assert(err.what() == catch_error);
+  }
+
+  try {
+    auto text = format("{18446744073709551616}", 1); //>uint64
+  } catch (const inv_arg_exc &err) {
+    std::string catch_error("incorrect input");
+    assert(err.what() == catch_error);
+  }
+
+  try {
+    auto text = format("{1}+{1} = {0}", 2); //недостаток аргументов
+  } catch (const inv_arg_exc &err) {
+    std::string catch_error("out of range args");
+    assert(err.what() == catch_error);
+  }
+
+  try {
+    auto text = format("{1}+{1} = {0}", 2, 3, 4); //переизбыток аргументов
   } catch (const inv_arg_exc &err) {
     std::string catch_error("out of range args vector");
     assert(err.what() == catch_error);
