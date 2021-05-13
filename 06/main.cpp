@@ -4,7 +4,6 @@
 
 #include "format.h"
 
-
 void incorrect_input_test() {
   try {
     auto text = format("{0}");
@@ -92,8 +91,7 @@ void input_test() {
   std::cout << "TEST_2 RESULT: INPUT TEST IS COMPLETED" << std::endl;
 }
 
-void incorrect_test_update()
-{
+void incorrect_test_update() {
   try {
     auto text = format("{0}{", 2);
   } catch (const format_exc &err) {
@@ -181,7 +179,7 @@ void correct_test_update() {
   text = format("{0}{1}{2}{3}{4}", 1, 2, 3, 4, 5);
   assert(text == "12345");
 
-  text = format("{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11}", 0,1,2,3,4,5,6,7,8,9,10,11);
+  text = format("{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11}", 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11);
   assert(text == "01234567891011");
 
   text = format("{0}{1}{0}{1}{0}{1}{0}{1}{0}{1}", "+", "-");
@@ -195,7 +193,6 @@ void correct_test_update() {
 
   std::cout << "TEST_4 RESULT: INPUT TEST IS COMPLETED" << std::endl;
 }
-
 
 int main() {
   incorrect_input_test();
