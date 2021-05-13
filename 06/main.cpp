@@ -92,8 +92,116 @@ void input_test() {
   std::cout << "TEST_2 RESULT: INPUT TEST IS COMPLETED" << std::endl;
 }
 
+void incorrect_test_update()
+{
+  try {
+    auto text = format("{0}{", 2);
+  } catch (const format_exc &err) {
+    std::string catch_error("expected } after {");
+//    std::cout << err.what()  << std::endl;
+    assert(err.what() == catch_error);
+  }
+
+  try {
+    auto text = format("{0}}", 2);
+  } catch (const format_exc &err) {
+    std::string catch_error("expected { before }");
+    assert(err.what() == catch_error);
+  }
+
+  try {
+    auto text = format("{0}{", 2);
+  } catch (const format_exc &err) {
+    std::string catch_error("expected } after {");
+//    std::cout << err.what()  << std::endl;
+    assert(err.what() == catch_error);
+  }
+
+  try {
+    auto text = format("{1} + {1} = {0} }", 1, 2);
+  } catch (const format_exc &err) {
+    std::string catch_error("expected { before }");
+//    std::cout << err.what()  << std::endl;
+    assert(err.what() == catch_error);
+  }
+
+  try {
+    auto text = format("{}", 2);
+  } catch (const inv_arg_exc &err) {
+    std::string catch_error("incorrect input");
+    assert(err.what() == catch_error);
+  }
+
+  try {
+    auto text = format("{}");
+  } catch (const inv_arg_exc &err) {
+    std::string catch_error("incorrect input");
+    assert(err.what() == catch_error);
+  }
+
+  try {
+    auto text = format("{abcd}");
+  } catch (const inv_arg_exc &err) {
+    std::string catch_error("incorrect input");
+    assert(err.what() == catch_error);
+  }
+
+  try {
+    auto text = format("{18446744073709551616}", 1);
+  } catch (const inv_arg_exc &err) {
+    std::string catch_error("incorrect input");
+    assert(err.what() == catch_error);
+  }
+
+  try {
+    auto text = format("{1}+{1} = {0}", 2);
+  } catch (const inv_arg_exc &err) {
+    std::string catch_error("out of range args");
+    assert(err.what() == catch_error);
+  }
+
+  try {
+    auto text = format("{1}+{1} = {0}", 2, 3, 4);
+  } catch (const inv_arg_exc &err) {
+    std::string catch_error("out of range args vector");
+    assert(err.what() == catch_error);
+  }
+
+  std::cout << "TEST_3 RESULT: INCORRECT INPUT TEST IS COMPLETED" << std::endl;
+}
+
+void correct_test_update() {
+
+  auto text = format("");
+  assert(text == "");
+
+  text = format("abcd");
+  assert(text == "abcd");
+
+  text = format("{0}{1}{2}{3}{4}", 1, 2, 3, 4, 5);
+  assert(text == "12345");
+
+  text = format("{0}{1}{2}{3}{4}{5}{6}{7}{8}{9}{10}{11}", 0,1,2,3,4,5,6,7,8,9,10,11);
+  assert(text == "01234567891011");
+
+  text = format("{0}{1}{0}{1}{0}{1}{0}{1}{0}{1}", "+", "-");
+  assert(text == "+-+-+-+-+-");
+
+  text = format("{0}{1} {0}{1}", "+", "-");
+  assert(text == "+- +-");
+
+  text = format("{0}{1}a{0}{1}", "+", "-");
+  assert(text == "+-a+-");
+
+  std::cout << "TEST_4 RESULT: INPUT TEST IS COMPLETED" << std::endl;
+}
+
+
 int main() {
   incorrect_input_test();
   input_test();
+  incorrect_test_update();
+  correct_test_update();
+
   return 0;
 }
