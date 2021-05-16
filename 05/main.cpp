@@ -6,7 +6,6 @@
 #include "Serializer.hpp"
 #include "Deserializer.hpp"
 #include "Different_structures_test.hpp"
-//#include "Save_and_load_tests.hpp"
 
 struct Data {
   uint64_t a;
@@ -23,7 +22,6 @@ struct Data {
     return deserializer(a, b, c);
   }
 };
-
 
 struct Data1 {
   uint64_t c;
@@ -151,7 +149,6 @@ void Incorrect_test() {
     assert(serializer.load(y) == Error::CorruptedArchive);
   }
 
-
   {
     Data y;
     std::stringstream stream("1a true 3");
@@ -239,8 +236,7 @@ void unit_test() {
 
 }
 
-void Deserializer_without_serializer_test()
-{
+void Deserializer_without_serializer_test() {
   Data x = {1, true, 2};
 
   std::stringstream stream;
@@ -252,8 +248,7 @@ void Deserializer_without_serializer_test()
 
 }
 
-void double_serializer_test()
-{
+void double_serializer_test() {
   Data x = {1, true, 2};
   Data y = {0, false, 0};
 
@@ -267,9 +262,7 @@ void double_serializer_test()
 
 }
 
-
-void double_deserializer_test()
-{
+void double_deserializer_test() {
   Data x = {1, true, 2};
   Data y = {0, false, 0};
 
@@ -277,11 +270,9 @@ void double_deserializer_test()
   Serializer serializer(stream);
   Deserializer deserializer(stream);
 
-
   assert(serializer.save(x) == Error::NoError);
   assert(deserializer.load(y) == Error::NoError);
   assert(deserializer.load(y) == Error::CorruptedArchive);
-
 
   std::cout << "TEST_9 RESULT: DOUBLE DESERIALIZER TEST IS COMPLETED" << std::endl;
 

@@ -35,7 +35,11 @@ class Deserializer {
   Error load(T &object) { return object.deserialize(*this); }
 
   template<class... ArgsT>
-  Error operator()(ArgsT &&... args) { Error err =  process(args...); if (!in_.eof()) return Error::CorruptedArchive; return err; }
+  Error operator()(ArgsT &&... args) {
+    Error err = process(args...);
+    if (!in_.eof()) return Error::CorruptedArchive;
+    return err;
+  }
 
 };
 
