@@ -11,6 +11,7 @@ class Serializer {
   static constexpr char Separator = ' ';
  private:
   std::ostream &out_;
+  bool flag = false;
 
   template<class T>
   Error process(T &&arg) { return create_str(arg); }
@@ -38,8 +39,14 @@ class Serializer {
   Error save(T &object) { return object.serialize(*this); }
 
   template<class... ArgsT>
-  Error operator()(ArgsT &&... args) { return process(args...); }
-
+  Error operator()(ArgsT &&... args) {
+    if (flag) {
+      return Error::CorruptedArchive;
+    } else {
+      flag = true;
+      return process(args...);
+    }
+  }
 };
 
 

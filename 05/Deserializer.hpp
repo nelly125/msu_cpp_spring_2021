@@ -7,7 +7,9 @@ class Deserializer {
  private:
 
   template<class T>
-  Error process(T &&arg) { return get_arg(arg); }
+  Error process(T &&arg) {
+    return get_arg(arg);
+  }
 
   template<class T, class... ArgsT>
   Error process(T &&value, ArgsT &&... args) {
@@ -23,7 +25,6 @@ class Deserializer {
 
   template<class T>
   Error get_arg(T) {
-    std::cout << "xzfc" << std::endl;
     return Error::CorruptedArchive;
   }
 
@@ -34,7 +35,7 @@ class Deserializer {
   Error load(T &object) { return object.deserialize(*this); }
 
   template<class... ArgsT>
-  Error operator()(ArgsT &&... args) { return process(args...); }
+  Error operator()(ArgsT &&... args) { Error err =  process(args...); if (!in_.eof()) return Error::CorruptedArchive; return err; }
 
 };
 
