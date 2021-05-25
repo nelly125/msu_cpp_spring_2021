@@ -6,7 +6,7 @@ FLAGS= -fsanitize=address
 
 test:prog clean run
 
-prog: main.o allocator.o iterator.o
+prog: main.o iterator.o
 	$(CC) $(FLAGS) $(WARNINGS) -o prog main.o -lm
 
 main.o:
